@@ -188,7 +188,7 @@ let activities = [
       image: "images/marineParade.jpg", alt: "Marine Parade, Napier",
       text: "Walk past the Pania of the Reef statue, the Sound Shell and the Art Deco colonnade on Napier's waterfront." },
     { id: 13, title: "Ahuriri to Napier Coastal Ride", type: "Cycling", placeId: 4, popularity: 60, duration: "2 hours",
-      image: "images/ahuririEstuary.jpg", alt: "Ahuriri Estuary walkway",
+      image: "images/marineParade.jpg", alt: "Norfolk pines along Marine Parade on Napier's waterfront",
       text: "Ride the flat coastal path from the Ahuriri Estuary along the waterfront to Napier." }
 ];
 
