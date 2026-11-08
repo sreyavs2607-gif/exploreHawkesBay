@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Details, photos, map and reviews for a Hawke's Bay attraction.">
-    <meta name="author" content="Sreya Vyloor Karuvan Sanjeev">
     <title>Attraction Details | Explore Hawke's Bay</title>
     <!-- Google Fonts: Poppins for headings, Nunito Sans for body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,25 +13,25 @@
 </head>
 <body>
     <!-- ===== HEADER: website title + page title ===== -->
-    <header class="titleBar">
-        <a class="siteName" href="index.html">Explore Hawke's Bay</a>
-        <h1>Attraction Details</h1>
+    <header>
+        <a class="siteName" href="index.html">EXPLORE HAWKE'S BAY</a>
+        <h1>ATTRACTION DETAILS</h1>
     </header>
 
     <!-- ===== NAVIGATION: sticky menu bar with curtain menu ===== -->
-    <nav class="menuBar" aria-label="Main menu">
+    <nav>
         <!-- Hidden checkbox controls the curtain menu (no JavaScript needed) -->
-        <input type="checkbox" id="menuToggle" class="menuToggle">
-        <label for="menuToggle" class="menuBtn">&#9776; MENU</label>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn">&#9776; MENU</label>
         <!-- Curtain menu -->
         <div class="menu">
-            <label for="menuToggle" class="closeBtn">&times;</label>
-            <div class="menuItems">
-                <a href="index.html">Home</a>
-                <a href="explore.html">Places to Visit</a>
-                <a href="activities.html">Things to Do</a>
-                <a href="about.html">About Hawke's Bay</a>
-                <a href="contact.html">Contact &amp; Feedback</a>
+            <label for="menu-toggle" class="close-btn">&times;</label>
+            <div class="menu-items">
+                <a href="index.html">HOME</a>
+                <a href="explore.html">PLACES TO VISIT</a>
+                <a href="activities.html">THINGS TO DO</a>
+                <a href="about.html">ABOUT HAWKE'S BAY</a>
+                <a href="contact.html">CONTACT &amp; FEEDBACK</a>
             </div>
         </div>
         <!-- Google Translate widget -->
@@ -41,13 +39,11 @@
     </nav>
 
     <!-- Breadcrumb: shows where the visitor is (modelled on TripAdvisor) -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-        <ol>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="explore.html">Places to Visit</a></li>
-            <li id="breadcrumbName">Attraction</li>
-        </ol>
-    </nav>
+    <p class="breadcrumb">
+        <a href="index.html">Home</a> &gt;
+        <a href="explore.html">Places to Visit</a> &gt;
+        <span id="breadcrumbName">Attraction</span>
+    </p>
 
     <!-- ===== MAIN CONTENT ===== -->
     <main id="mainContent" class="detailLayout">
@@ -59,11 +55,13 @@
                 <h2 id="placeName">Attraction</h2>
                 <p class="cardMeta" id="placeMeta"></p>
 
-                <!-- Photo slideshow -->
+                <!-- Photo slideshow (Manual Slideshow demo) -->
                 <div class="slideshow">
-                    <img id="mainPhoto" src="images/teMataPeak.jpg" alt="">
-                    <button class="slideBtn prevBtn" id="prevPhoto" onclick="plusSlides(-1)" aria-label="Previous photo">&#10094;</button>
-                    <button class="slideBtn nextBtn" id="nextPhoto" onclick="plusSlides(1)" aria-label="Next photo">&#10095;</button>
+                    <img id="manual-slide-image" src="images/teMataPeak.jpg" alt="">
+                </div>
+                <div class="slideButtons" id="slideButtons">
+                    <button class="btn btnSmall btnOutline" onclick="previousSlide()">&#10094; PREVIOUS</button>
+                    <button class="btn btnSmall btnOutline" onclick="nextSlide()">NEXT &#10095;</button>
                 </div>
                 <div class="thumbRow" id="thumbRow"></div>
             </section>
@@ -71,11 +69,11 @@
             <section class="detailCard">
                 <div class="listenRow">
                     <h2>Description &amp; facts</h2>
-                    <!-- Text-to-Speech buttons (W10 accessibility demo) -->
+                    <!-- Text-to-Speech buttons (W10 Text-to-Speech demo) -->
                     <div class="listenButtons">
-                        <button class="btn btnSmall" onclick="listen()">&#128264; Listen</button>
-                        <button class="btn btnSmall btnOutline" id="pauseBtn" onclick="pauseOrResume()">&#9208; Pause</button>
-                        <button class="btn btnSmall btnOutline" onclick="stopListening()">&#9632; Stop</button>
+                        <button class="btn btnSmall" onclick="speakText()">&#128264; SPEAK</button>
+                        <button class="btn btnSmall btnOutline" onclick="toggle(this)">&#10074;&#10074; PAUSE</button>
+                        <button class="btn btnSmall btnOutline" onclick="cancel()">&#x2716; CANCEL</button>
                     </div>
                 </div>
                 <p id="placeDescription"></p>
@@ -86,8 +84,8 @@
             <section class="detailCard">
                 <h2>Rate this place</h2>
                 <div class="voteRow">
-                    <button class="voteBtn" id="likeBtn" aria-label="Like">&#128077; <span id="likeNumber">0</span></button>
-                    <button class="voteBtn" id="dislikeBtn" aria-label="Dislike">&#128078; <span id="dislikeNumber">0</span></button>
+                    <button class="voteBtn" id="likeBtn">&#128077; <span id="likeNumber">0</span></button>
+                    <button class="voteBtn" id="dislikeBtn">&#128078; <span id="dislikeNumber">0</span></button>
                 </div>
 
                 <h3 class="spaceTop">Comments</h3>
@@ -109,7 +107,7 @@
             <section class="detailCard">
                 <h2>Location</h2>
                 <div class="mapBox">
-                    <iframe id="placeMap" title="Map showing the location of this attraction"></iframe>
+                    <iframe id="placeMap"></iframe>
                 </div>
             </section>
         </div>
@@ -121,22 +119,19 @@
                 <form id="enquiryForm">
                     <div class="formRow">
                         <label for="fullName">Full name *</label>
-                        <input type="text" id="fullName">
-                        <p class="errorText" id="fullNameError"></p>
+                        <input type="text" id="fullName" required>
                     </div>
                     <div class="formRow">
                         <label for="email">Email *</label>
-                        <input type="text" id="email">
-                        <p class="errorText" id="emailError"></p>
+                        <input type="email" id="email" required>
                     </div>
                     <div class="formRow">
                         <label for="phone">Phone (optional)</label>
                         <input type="text" id="phone">
-                        <p class="errorText" id="phoneError"></p>
                     </div>
                     <div class="formRow">
                         <label for="enquiryType">Category *</label>
-                        <select id="enquiryType">
+                        <select id="enquiryType" required>
                             <option value="">Choose one</option>
                             <option>Opening hours</option>
                             <option>Getting there</option>
@@ -144,28 +139,24 @@
                             <option>Accessibility</option>
                             <option>Something else</option>
                         </select>
-                        <p class="errorText" id="enquiryTypeError"></p>
                     </div>
                     <div class="formRow">
                         <label for="message">Message *</label>
-                        <textarea id="message"></textarea>
-                        <p class="errorText" id="messageError"></p>
+                        <textarea id="message" required></textarea>
                     </div>
                     <div class="formRow checkRow">
-                        <input type="checkbox" id="consent">
+                        <input type="checkbox" id="consent" required>
                         <label for="consent">I agree to be emailed a reply. I can unsubscribe at any time. *</label>
                     </div>
-                    <p class="errorText" id="consentError"></p>
                     <p class="formNote">See our <button type="button" class="linkButton" onclick="openDialog('privacyDialog')">Privacy Policy</button>.</p>
                     <button type="submit" class="btn">Submit</button>
-                    <p class="formSuccess" id="enquirySuccess"></p>
                 </form>
             </div>
         </aside>
     </main>
 
     <!-- ===== FOOTER (same on every page) ===== -->
-    <footer class="siteFooter">
+    <footer>
         <div class="container footerGrid">
             <section>
                 <h2>Explore Hawke's Bay</h2>
@@ -194,7 +185,7 @@
     <!-- ===== COPYRIGHT NOTICE dialog (Copyright Act 1994) ===== -->
     <dialog id="copyrightDialog">
         <div class="dialogInner legalText">
-            <button type="button" class="dialogClose" onclick="closeDialog('copyrightDialog')" aria-label="Close">&times;</button>
+            <button type="button" class="dialogClose" onclick="closeDialog('copyrightDialog')">&times;</button>
             <h2>Copyright &amp; Credits</h2>
             <h3>Statement of authenticity</h3>
             <p>This website was created by Sreya Vyloor Karuvan Sanjeev (student ID 2025000322) for the ITWD5.130 Website Development assessment at EIT. It is my own work, except where other people's work is acknowledged below. Use of generative AI is declared in my Review and Evaluation report.</p>
@@ -202,30 +193,30 @@
             <p>&copy; 2026 Sreya Vyloor Karuvan Sanjeev. The text, layout and code of this site are protected under the New Zealand Copyright Act 1994. Photographs belong to their creators and are used under the licences listed below. This is a student project and is not an official tourism website.</p>
             <h3>Image credits</h3>
             <ul>
-                <li>[Photographer]. (n.d.). <em>Vineyard at sunset</em> [Photograph]. Unsplash. [Unsplash page link]</li>
-                <li>[Author]. (n.d.). <em>View from Te Mata Peak</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:View_from_te_mata_peak.jpg</li>
-                <li>[Author]. (n.d.). <em>Te Mata Peak</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Te_Mata_Peak.jpg</li>
-                <li>[Author]. (n.d.). <em>Cape Kidnappers, New Zealand</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Cape_Kidnappers,_New_Zealand.jpg</li>
-                <li>[Author]. (n.d.). <em>Ahuriri Estuary Walkway, Napier</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Ahuriri_Estuary_Walkway,_Napier.jpg</li>
-                <li>[Author]. (n.d.). <em>Mission Winery, Napier, New Zealand</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Mission_Winery,_Napier,_New_Zealand_(473754685).jpg</li>
-                <li>[Author]. (n.d.). <em>Craggy Range Winery</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Craggy_Range_Winery.jpg</li>
-                <li>[Author]. (n.d.). <em>Hawkes Bay Farmers Market, Hastings</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Farmers_Market,_Hastings_-_6547633233.jpg</li>
-                <li>[Author]. (n.d.). <em>Napier, Part II: Art Deco</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Napier,_Part_II-_Art_Deco_-_Napier9507.jpg</li>
-                <li>[Author]. (n.d.). <em>Marine Parade Garden, Napier</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Marine_Parade_Garden_Napier-4021.jpg</li>
-                <li>[Author]. (n.d.). <em>Hawkes Bay Museum and Art Gallery</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Museum_and_Art_Gallery_(30970520053).jpg</li>
-                <li>[Author]. (n.d.). <em>1976 Napier aquarium building</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:1976_napier_aquarium_building.jpg</li>
-                <li>[Author]. (n.d.). <em>Bare Island</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Bare_Island1_800x600.jpg</li>
-                <li>Sanjeev, S. V. K. (2026). <em>Hawke's Bay slideshow</em> [Animated GIF made from six of the photos above].</li>
+
+                <li>Trumpkinius. (2011). View from Te Mata Peak [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:View_from_te_mata_peak.jpg (CC BY)</li>
+                <li>Longman, G. (2006). Te Mata Peak [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Te_Mata_Peak.jpg (CC BY 2.0)</li>
+                <li>Aub, N. (2016). Cape Kidnappers, New Zealand [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Cape_Kidnappers,_New_Zealand.jpg (CC BY 2.0)</li>
+                <li>itravelNZ. (2011). Ahuriri Estuary Walkway, Napier [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Ahuriri_Estuary_Walkway,_Napier.jpg (CC BY 2.0)</li>
+                <li>Cohen-Rose, S., &amp; Rose, C. (2007). Mission Winery, Napier, New Zealand [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Mission_Winery,_Napier,_New_Zealand_(473754685).jpg (CC BY 2.0)</li>
+                <li>Capper, P. (2005). Craggy Range Winery [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Craggy_Range_Winery.jpg (CC BY 2.0)</li>
+                <li>itravelNZ. (2011). Hawkes Bay Farmers Market, Hastings [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Farmers_Market,_Hastings_-_6547633233.jpg (CC BY 2.0)</li>
+                <li>lumoplank. (n.d.). Napier, Part II: Art Deco [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Napier,_Part_II-_Art_Deco_-_Napier9507.jpg (CC0 Public Domain)</li>
+                <li>QFSE Media. (2012). Marine Parade Garden, Napier [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Marine_Parade_Garden_Napier-4021.jpg (CC BY-SA 3.0 NZ)</li>
+                <li>Hisgett, T. (2016). Hawkes Bay Museum and Art Gallery [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Museum_and_Art_Gallery_(30970520053).jpg (CC BY 2.0)</li>
+                <li>ZoofanNZ. (2008). 1976 Napier aquarium building [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:1976_napier_aquarium_building.jpg (Public domain)</li>
+                <li>Lseven7. (2008). Bare Island [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Bare_Island1_800x600.jpg (CC BY-SA 3.0)</li>
+                <li>Sanjeev, S. V. K. (2026). Hawke's Bay slideshow [Animated GIF made from six of the photos above].</li>
 
             </ul>
             <h3>References</h3>
             <ul>
-                <li>Google. (n.d.). <em>Google Fonts</em>. https://fonts.google.com</li>
-                <li>Google. (n.d.). <em>Google Translate website widget</em>. https://translate.google.com</li>
-                <li>Google. (n.d.). <em>Google Maps</em>. https://maps.google.com</li>
-                <li>NIWA. (n.d.). <em>Climate summaries for New Zealand locations</em>. National Institute of Water and Atmospheric Research. https://niwa.co.nz/climate</li>
-                <li>Refsnes Data. (n.d.). <em>W3Schools How To</em>. https://www.w3schools.com/howto/</li>
-                <li>Dang, D. (2026). <em>ITWD5.130 Website Development class demos</em> [Unpublished course materials]. Eastern Institute of Technology.</li>
+                <li>Google. (n.d.). Google Fonts. https://fonts.google.com</li>
+                <li>Google. (n.d.). Google Translate website widget. https://translate.google.com</li>
+                <li>Google. (n.d.). Google Maps. https://maps.google.com</li>
+                <li>NIWA. (n.d.). Climate summaries for New Zealand locations. National Institute of Water and Atmospheric Research. https://niwa.co.nz/climate</li>
+                <li>Refsnes Data. (n.d.). W3Schools How To. https://www.w3schools.com/howto/</li>
+                <li>Dang, D. (2026). ITWD5.130 Website Development class demos [Unpublished course materials]. Eastern Institute of Technology.</li>
             </ul>
         </div>
     </dialog>
@@ -233,7 +224,7 @@
     <!-- ===== PRIVACY POLICY dialog (Privacy Act 2020) ===== -->
     <dialog id="privacyDialog">
         <div class="dialogInner legalText">
-            <button type="button" class="dialogClose" onclick="closeDialog('privacyDialog')" aria-label="Close">&times;</button>
+            <button type="button" class="dialogClose" onclick="closeDialog('privacyDialog')">&times;</button>
             <h2>Privacy Policy</h2>
             <p>This policy explains how Explore Hawke's Bay handles personal information, following the information privacy principles in the New Zealand Privacy Act 2020.</p>
             <h3>What we collect</h3>
