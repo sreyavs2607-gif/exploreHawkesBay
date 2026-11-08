@@ -1,0 +1,680 @@
+/* =========================================================
+   style.css - Explore Hawke's Bay
+   ONE shared stylesheet for every page.
+   MOBILE FIRST: the styles at the top are for small phones
+   (up to 425px). Media queries further down add changes for
+   tablets (426px+) and desktops (769px+), the same breakpoints
+   used in the ITWD5.130 class demos.
+   ========================================================= */
+
+/* ---------- Colour theme (from the Session 2 wireframes) ---------- */
+:root {
+    --titleBar: #ff99ff;      /* violet-pink title bar */
+    --menuBar: #ffccff;       /* light pink menu bar */
+    --blush: #ffd6e7;         /* light pink sections */
+    --salmon: #ffd9d2;        /* soft salmon sections */
+    --hotPink: #ff7ab8;       /* bright pink sections */
+    --deepPink: #b0125b;      /* buttons and links (white text = high contrast) */
+    --plum: #2d0a2b;          /* main text colour */
+    --cream: #fffaf6;         /* page background */
+    --white: #ffffff;
+    --shadow: 0 6px 18px rgba(45, 10, 43, 0.15);
+    --radius: 14px;
+}
+
+/* ---------- Reset & base ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Nunito Sans", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;              /* readable paragraphs */
+    letter-spacing: 0.01em;
+    color: var(--plum);
+    background-color: var(--cream);
+}
+
+h1, h2, h3, h4 {
+    font-family: "Poppins", Arial, sans-serif;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; margin-bottom: 0.6em; }
+h3 { font-size: 1.15rem; margin-bottom: 0.3em; }
+
+p { margin-bottom: 0.8em; }
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a { color: var(--deepPink); }
+
+/*-------------------------------------------------------*/
+header {
+    /* Define styles for header section (title bar) */
+    background-color: var(--titleBar);
+    color: var(--plum);
+    text-align: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    margin: 0px;
+}
+.siteName {
+    display: inline-block;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--plum);
+    text-decoration: none;
+}
+header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+}
+
+/*-------------------------------------------------------*/
+nav {
+    /* Define styles for nav (menu bar) - sticky navbar demo */
+    background-color: var(--menuBar);
+    position: sticky;          /* stays at the top while scrolling */
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    box-shadow: 0 2px 6px rgba(45, 10, 43, 0.12);
+}
+
+/*-------------------------------------------------------*/
+/* Curtain menu */
+.menu {
+    position: fixed;        /* Stays in place when scrolling */
+    top: 0;                 /* Positions at top-left corner */
+    left: 0;                /* Positions at top-left corner */
+    width: 90%;             /* Takes 90% of screen width */
+    height: 0;              /* Hidden initially (zero height) */
+    background-color: rgba(176, 18, 91, 0.95);   /* deep pink menu background */
+    overflow: hidden;       /* Hides content that exceeds height */
+    transition: 0.5s;       /* Smooth 0.5 second animation */
+    text-align: center;
+    z-index: 100;           /* Sits above other content */
+}
+
+/* Menu button */
+.menu-btn {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;      /* Large hamburger icon */
+    cursor: pointer;        /* Shows it's clickable */
+    padding: 12px 10px;     /* Space around the icon */
+    display: inline-block;  /* Takes up only needed space */
+}
+
+/* Hide checkbox */
+#menu-toggle {
+    display: none;          /* Hides from view (only for logic) */
+}
+
+/* Show menu when checked */
+#menu-toggle:checked ~ .menu {
+    height: 100%;           /* When checkbox is checked, menu expands to full height */
+}
+
+/* Close button */
+.close-btn {
+    font-size: 2.6rem;      /* Large X icon */
+    line-height: 1;
+    color: var(--white);
+    position: absolute;     /* Positioned relative to menu */
+    top: 14px;              /* Top-right corner of menu */
+    right: 24px;            /* Top-right corner of menu */
+    cursor: pointer;        /* Shows it's clickable */
+}
+
+/* Menu items */
+.menu-items {
+    margin-top: 90px;       /* Spacing below close button */
+    margin-bottom: 0px;
+}
+.menu-items a {
+    display: block;         /* Each link on new line */
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 1.4rem;      /* Large text */
+    color: var(--white);
+    text-decoration: none;  /* Removes underlines */
+    padding: 10px;          /* Space around text */
+    letter-spacing: 0.05em;
+}
+
+/* Hover effect */
+.menu-items a:hover {
+    color: var(--menuBar);
+    text-decoration: underline;
+}
+/* The page we are on */
+.menu-items a.active {
+    color: var(--titleBar);
+}
+
+/*-------------------------------------------------------*/
+main {
+    /* Define style for main */
+    /* At least 70% of browser height */
+    min-height: 70vh;       /* vh = viewport height = browser height */
+}
+
+/*-------------------------------------------------------*/
+footer {
+    /* Define style for footer */
+    background-color: var(--plum);
+    color: var(--white);
+    padding: 32px 16px 18px 16px;
+}
+.footerGrid { display: grid; gap: 22px; }
+footer h2 { font-size: 1.05rem; color: var(--titleBar); }
+footer a { color: var(--menuBar); }
+footer ul { list-style: none; }
+footer li { margin-bottom: 4px; }
+.linkButton {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--menuBar);
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+}
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 22px;
+    padding-top: 14px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Google Translate widget (accessibility: understandable for international visitors) */
+.translateBox {
+    font-size: 0.8rem;
+    max-width: 55%;
+    height: 30px;           /* only show the language box, not the "Powered by" text */
+    overflow: hidden;
+}
+
+/* ---------- Main layout ---------- */
+.section {
+    padding: 32px 16px;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.blushBg  { background-color: var(--blush); }
+.salmonBg { background-color: var(--salmon); }
+.pinkBg   { background-color: var(--hotPink); }
+.sectionIntro {
+    max-width: 700px;
+    margin-bottom: 1.2em;
+}
+
+/* Breadcrumb (Attraction Details) */
+.breadcrumb {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid var(--deepPink);
+    border-radius: 999px;
+    background-color: var(--deepPink);
+    color: var(--white);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); background-color: #8e0c48; }
+.btnOutline {
+    background-color: var(--white);
+    color: var(--deepPink);
+}
+.btnOutline:hover { background-color: var(--blush); color: var(--deepPink); }
+.btnSmall { padding: 6px 14px; font-size: 0.85rem; }
+
+/* ---------- Home: hero (Blurred Background Image demo) ---------- */
+.hero {
+    position: relative;          /* so the text box can sit on top of the image */
+    height: 75vh;
+    min-height: 460px;
+    overflow: hidden;            /* stops the blur spilling outside the hero */
+}
+.bg-image {
+    /* The image used */
+    background-image: url("../images/missionEstate.jpg");
+    /* Add the blur effect */
+    filter: blur(4px);
+    -webkit-filter: blur(4px);
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* Position text in the middle of the image */
+.bg-text {
+    background-color: rgb(0, 0, 0);            /* fallback colour */
+    background-color: rgba(45, 10, 43, 0.6);   /* dark plum, see-through */
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    border-radius: var(--radius);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 90%;
+    max-width: 640px;
+    padding: 20px;
+    text-align: center;
+}
+.bg-text h2 { font-size: 1.7rem; }
+.bg-text p { font-weight: normal; }
+.heroButtons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 12px; }
+.bg-text .btnOutline { background-color: transparent; color: white; border: 2px solid white; }
+.bg-text .btnOutline:hover { background-color: rgba(255, 255, 255, 0.2); color: white; }
+
+
+/* Quick links (Hastings / Napier / Havelock North) */
+.quickLinks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+.quickLink {
+    display: block;
+    padding: 16px;
+    border-radius: var(--radius);
+    background-color: var(--plum);
+    color: var(--white);
+    text-align: center;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+.quickLink:hover { transform: scale(1.04); }
+.quickLink span { display: block; font-weight: 400; font-size: 0.85rem; opacity: 0.85; }
+
+/* Home: three facts strip */
+.factList {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+}
+.factList li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+}
+.factIcon {
+    flex: 0 0 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 44px;
+    background-color: var(--hotPink);
+    font-size: 1.3rem;
+}
+
+/* ---------- Cards (places / activities) ---------- */
+.cardGrid {
+    display: grid;
+    grid-template-columns: 1fr;        /* phones: 1 column */
+    gap: 20px;
+}
+.card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+    transform: translateY(-6px) scale(1.02);    /* hover animation from the products demo */
+    box-shadow: 0 12px 26px rgba(45, 10, 43, 0.22);
+}
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.cardBody {
+    padding: 14px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+.cardBody p { margin-bottom: 0.4em; }
+.cardMeta {
+    font-size: 0.85rem;
+    color: #6b3a63;
+}
+.categoryTag {
+    display: inline-block;
+    margin-right: auto;      /* stops the tag stretching across the card */
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: var(--blush);
+    color: var(--deepPink);
+}
+.cardActions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.emptyMessage {
+    text-align: center;
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: var(--radius);
+}
+
+/* ---------- Search / filter / sort controls ---------- */
+.controlPanel {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.controlPanel label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+.searchRow { display: flex; gap: 8px; }
+.controlPanel input,
+.controlPanel select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 2px solid var(--hotPink);
+    border-radius: 10px;
+    background-color: var(--white);
+    color: var(--plum);
+    font-family: inherit;
+}
+.iconBtn {
+    flex: 0 0 auto;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 2px solid var(--deepPink);
+    background-color: var(--white);
+    color: var(--deepPink);
+    border-radius: 10px;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+/* Pill-shaped filters (modelled on NewZealand.com) */
+.pillRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.pill {
+    border: 2px solid var(--deepPink);
+    background-color: var(--white);
+    color: var(--deepPink);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.pill:hover { background-color: var(--blush); }
+.pill.active {
+    background-color: var(--deepPink);
+    color: var(--white);
+}
+.resultCount { font-size: 0.9rem; margin-bottom: 10px; }
+.loadMoreWrap { text-align: center; margin-top: 24px; }
+
+/* ---------- Dialogs (modal demo) ---------- */
+dialog {
+    border: none;
+    border-radius: var(--radius);
+    padding: 0;
+    width: 90%;
+    max-width: 640px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    color: var(--plum);
+}
+.dialogInner { padding: 20px 22px; }
+.dialogInner img { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+.dialogClose {
+    float: right;
+    border: none;
+    background: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--plum);
+}
+.legalText h3 { margin-top: 1em; }
+.legalText ul { padding: 0 0 0 20px; margin-bottom: 0.8em; }
+.legalText li { margin-bottom: 0.4em; font-size: 0.92rem; }
+
+/* ---------- Forms ---------- */
+.formCard {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+.formRow { margin-bottom: 14px; }
+.formRow label { display: block; font-weight: 700; margin-bottom: 4px; }
+.formRow input,
+.formRow select,
+.formRow textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 2px solid #d9a7c7;
+    border-radius: 10px;
+    background-color: var(--cream);
+    color: var(--plum);
+}
+.formRow textarea { min-height: 120px; }
+.checkRow { display: flex; gap: 10px; align-items: flex-start; }
+.checkRow input { width: 20px; height: 20px; margin-top: 4px; flex: 0 0 auto; }
+.checkRow label { font-weight: 400; }
+.formNote { font-size: 0.85rem; color: #6b3a63; }
+
+
+/* ---------- Attraction Details page ---------- */
+.detailLayout {
+    display: grid;
+    gap: 20px;
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.detailMain { display: grid; gap: 20px; min-width: 0; }
+.detailCard {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+}
+.slideshow { margin-top: 10px; }
+.slideshow img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.slideButtons { display: flex; gap: 10px; margin-top: 4px; }
+.slideButtons .btn { width: 120px; }      /* same button width as the slideshow demo */
+.thumbRow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+.thumb { width: 100%; height: 60px; object-fit: cover; border: 3px solid transparent; border-radius: 8px; cursor: pointer; }
+.thumb.activeThumb { border: 3px solid var(--deepPink); }
+.listenRow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.listenRow h2 { margin-bottom: 0; }
+.listenButtons { display: flex; flex-wrap: wrap; gap: 6px; }
+.highlightList { padding: 0 0 0 20px; }
+.voteRow { display: flex; gap: 12px; }
+.voteBtn {
+    border: 2px solid var(--deepPink);
+    background-color: var(--white);
+    color: var(--plum);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.voteBtn:hover { transform: scale(1.06); }
+.voteBtn.voted { background-color: var(--deepPink); color: var(--white); }
+.reviewList { display: grid; gap: 10px; }
+.review { background-color: var(--blush); border-radius: 10px; padding: 10px 14px; }
+.review p { margin-bottom: 0.2em; font-style: italic; }
+.review cite { font-size: 0.85rem; font-style: normal; font-weight: 700; }
+.mapBox iframe { width: 100%; height: 280px; border: 0; border-radius: 10px; }
+.darkLink { color: var(--deepPink); }
+
+
+/* ---------- Things to Do page ---------- */
+.activityHero { height: 420px; }
+.activityHero .bg-text h2 { font-size: 1.6rem; }
+.activityImage { background-image: url("../images/craggyRange.jpg"); }
+.filterLabel { font-weight: 700; margin-bottom: 4px; }
+.filterPanel .formRow input,
+.filterPanel .formRow select { background-color: var(--white); }
+
+/* ---------- About page ---------- */
+.storyGrid { display: grid; gap: 24px; align-items: center; }
+.storyMedia img { width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+.storyMedia .caption { font-size: 0.85rem; margin-top: 6px; text-align: center; }
+.areaButtons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tableWrap { overflow-x: auto; }        /* table scrolls sideways on small phones */
+.weatherTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.weatherTable th, .weatherTable td { padding: 10px 12px; text-align: left; }
+.weatherTable th { background-color: var(--deepPink); color: var(--white); }
+.weatherTable tr:nth-child(even) { background-color: var(--blush); }   /* zebra stripes */
+
+/* ---------- Contact page ---------- */
+.contactGrid { max-width: 720px; margin: 0 auto; }
+
+/* ---------- Load more (News page demo): cards after the first 6 start hidden ---------- */
+.hidden { display: none; }
+
+/* ---------- Scroll reveal animation (homepage demo) ---------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   MEDIUM DEVICES: tablets / iPads (426px and wider)
+   ========================================================= */
+@media screen and (min-width: 426px) {
+    .menu { width: 50%; }                         /* curtain menu 50% wide */
+    header h1 { font-size: 1.8rem; }
+    .quickLinks { grid-template-columns: repeat(3, 1fr); }
+    .cardGrid { grid-template-columns: repeat(2, 1fr); }   /* 2 columns */
+    .controlPanel { grid-template-columns: 2fr 1fr 1fr; align-items: end; }
+    .bg-text { width: 80%; padding: 32px; }
+    .bg-text h2 { font-size: 2rem; }
+    .footerGrid { grid-template-columns: repeat(2, 1fr); }
+    .slideshow img { height: 320px; }
+    .thumb { height: 80px; }
+}
+
+/* =========================================================
+   BIG DEVICES: laptops / PCs (769px and wider)
+   ========================================================= */
+@media screen and (min-width: 769px) {
+    .menu { width: 33%; }                         /* curtain menu 33% wide */
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    .section { padding: 48px 32px; }
+    header h1 { font-size: 2rem; }
+    .cardGrid { grid-template-columns: repeat(3, 1fr); }   /* 3 columns */
+    .factList { grid-template-columns: repeat(3, 1fr); }
+    .bg-text h2 { font-size: 2.6rem; }
+    .footerGrid { grid-template-columns: 2fr 1fr 1fr; }
+
+    /* Home: welcome + quick links side by side, like the desktop wireframe */
+    .homeTop {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 0;
+        align-items: stretch;
+    }
+    .homeTop .quickLinks { grid-template-columns: 1fr; }
+
+    /* Attraction Details: content on the left, enquiry form on the right */
+    .detailLayout { grid-template-columns: 2fr 1fr; padding: 24px 32px; align-items: start; }
+    .detailSide { position: sticky; top: 70px; }
+    .slideshow img { height: 400px; }
+    .activityTop { display: grid; grid-template-columns: 3fr 2fr; }
+    .activityHero { height: 100%; min-height: 460px; }
+    .activityHero .bg-text h2 { font-size: 2rem; }
+    .storyGrid { grid-template-columns: 1fr 1fr; }
+    .aboutBottom { display: grid; grid-template-columns: 3fr 2fr; }
+}
+
+/* ---------- Small helper classes ---------- */
+.spaceTop { margin-top: 1.2em; }
+.centerText { text-align: center; }
+.formNote .linkButton { color: var(--deepPink); }
