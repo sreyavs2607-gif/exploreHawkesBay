@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search and filter the best places to visit in Hawke's Bay.">
+    <meta name="author" content="Sreya Vyloor Karuvan Sanjeev">
+    <title>Places to Visit | Explore Hawke's Bay</title>
+    <!-- Google Fonts: Poppins for headings, Nunito Sans for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- ONE shared CSS file for all pages -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ===== HEADER: website title + page title ===== -->
+    <header class="titleBar">
+        <a class="siteName" href="index.html">Explore Hawke's Bay</a>
+        <h1>Places to Visit</h1>
+    </header>
+
+    <!-- ===== NAVIGATION: sticky menu bar with curtain menu ===== -->
+    <nav class="menuBar" aria-label="Main menu">
+        <!-- Hidden checkbox controls the curtain menu (no JavaScript needed) -->
+        <input type="checkbox" id="menuToggle" class="menuToggle">
+        <label for="menuToggle" class="menuBtn">&#9776; MENU</label>
+        <!-- Curtain menu -->
+        <div class="menu">
+            <label for="menuToggle" class="closeBtn">&times;</label>
+            <div class="menuItems">
+                <a href="index.html">Home</a>
+                <a href="explore.html" class="active">Places to Visit</a>
+                <a href="activities.html">Things to Do</a>
+                <a href="about.html">About Hawke's Bay</a>
+                <a href="contact.html">Contact &amp; Feedback</a>
+            </div>
+        </div>
+        <!-- Google Translate widget -->
+        <div class="translateBox" id="googleTranslate"></div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="mainContent">
+        <section class="section blushBg">
+            <div class="container">
+                <h2>List of Attractions</h2>
+                <p class="sectionIntro">Search by name, choose a category or sort the list. Click "View detail" to see photos, a map and reviews.</p>
+
+                <!-- Search and sort controls -->
+                <div class="controlPanel">
+                    <div>
+                        <label for="searchInput">Search attractions</label>
+                        <div class="searchRow">
+                            <input type="text" id="searchInput" placeholder="e.g. beach, wine, Napier" oninput="newSearch()">
+                            <button class="iconBtn" id="voiceSearchBtn" onclick="startVoiceSearch()" aria-label="Search by voice" title="Search by voice">&#127908;</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="sortSelect">Sort by</label>
+                        <select id="sortSelect" onchange="updatePlaces()">
+                            <option value="popular">Most popular</option>
+                            <option value="name">Name (A&ndash;Z)</option>
+                            <option value="area">Town / area</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="areaSelect">Town / area</label>
+                        <select id="areaSelect" onchange="newSearch()">
+                            <option value="All">All areas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Pill-shaped category buttons (modelled on NewZealand.com) -->
+                <div class="pillRow">
+                    <button class="pill active" onclick="chooseCategory(0, this)">All</button>
+                    <button class="pill" onclick="chooseCategory(1, this)">Wine &amp; Food</button>
+                    <button class="pill" onclick="chooseCategory(2, this)">Nature Trails</button>
+                    <button class="pill" onclick="chooseCategory(3, this)">Art Deco &amp; Culture</button>
+                </div>
+
+                <p class="resultCount" id="resultCount"></p>
+
+                <!-- Destination grid: cards are added by js/explore.js -->
+                <div class="cardGrid" id="placeGrid"></div>
+
+                <div class="loadMoreWrap">
+                    <button class="btn" id="loadMoreBtn" onclick="loadMore()">Load more places</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick view dialog (modal dialog demo) -->
+        <dialog id="quickView">
+            <div class="dialogInner" id="quickViewContent"></div>
+        </dialog>
+    </main>
+
+    <!-- ===== FOOTER (same on every page) ===== -->
+    <footer class="siteFooter">
+        <div class="container footerGrid">
+            <section>
+                <h2>Explore Hawke's Bay</h2>
+                <p>A small, curated guide to the best places, food, wine and culture in Hawke's Bay, Aotearoa New Zealand.</p>
+            </section>
+            <section>
+                <h2>Pages</h2>
+                <ul>
+                    <li><a href="explore.html">Places to Visit</a></li>
+                    <li><a href="activities.html">Things to Do</a></li>
+                    <li><a href="about.html">About Hawke's Bay</a></li>
+                    <li><a href="contact.html">Contact &amp; Feedback</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Legal</h2>
+                <ul>
+                    <li><button type="button" class="linkButton" onclick="openDialog('copyrightDialog')">Copyright &amp; Credits</button></li>
+                    <li><button type="button" class="linkButton" onclick="openDialog('privacyDialog')">Privacy Policy</button></li>
+                </ul>
+            </section>
+        </div>
+        <p class="copyright">&copy; 2026 Sreya Vyloor Karuvan Sanjeev &middot; Student project for ITWD5.130 Website Development, EIT</p>
+    </footer>
+
+    <!-- ===== COPYRIGHT NOTICE dialog (Copyright Act 1994) ===== -->
+    <dialog id="copyrightDialog">
+        <div class="dialogInner legalText">
+            <button type="button" class="dialogClose" onclick="closeDialog('copyrightDialog')" aria-label="Close">&times;</button>
+            <h2>Copyright &amp; Credits</h2>
+            <h3>Statement of authenticity</h3>
+            <p>This website was created by Sreya Vyloor Karuvan Sanjeev (student ID 2025000322) for the ITWD5.130 Website Development assessment at EIT. It is my own work, except where other people's work is acknowledged below. Use of generative AI is declared in my Review and Evaluation report.</p>
+            <h3>Copyright notice</h3>
+            <p>&copy; 2026 Sreya Vyloor Karuvan Sanjeev. The text, layout and code of this site are protected under the New Zealand Copyright Act 1994. Photographs belong to their creators and are used under the licences listed below. This is a student project and is not an official tourism website.</p>
+            <h3>Image credits</h3>
+            <ul>
+                <li>[Photographer]. (n.d.). <em>Vineyard at sunset</em> [Photograph]. Unsplash. [Unsplash page link]</li>
+                <li>[Author]. (n.d.). <em>View from Te Mata Peak</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:View_from_te_mata_peak.jpg</li>
+                <li>[Author]. (n.d.). <em>Te Mata Peak</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Te_Mata_Peak.jpg</li>
+                <li>[Author]. (n.d.). <em>Cape Kidnappers, New Zealand</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Cape_Kidnappers,_New_Zealand.jpg</li>
+                <li>[Author]. (n.d.). <em>Ahuriri Estuary Walkway, Napier</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Ahuriri_Estuary_Walkway,_Napier.jpg</li>
+                <li>[Author]. (n.d.). <em>Mission Winery, Napier, New Zealand</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Mission_Winery,_Napier,_New_Zealand_(473754685).jpg</li>
+                <li>[Author]. (n.d.). <em>Craggy Range Winery</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Craggy_Range_Winery.jpg</li>
+                <li>[Author]. (n.d.). <em>Hawkes Bay Farmers Market, Hastings</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Farmers_Market,_Hastings_-_6547633233.jpg</li>
+                <li>[Author]. (n.d.). <em>Napier, Part II: Art Deco</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Napier,_Part_II-_Art_Deco_-_Napier9507.jpg</li>
+                <li>[Author]. (n.d.). <em>Marine Parade Garden, Napier</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Marine_Parade_Garden_Napier-4021.jpg</li>
+                <li>[Author]. (n.d.). <em>Hawkes Bay Museum and Art Gallery</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Hawkes_Bay_Museum_and_Art_Gallery_(30970520053).jpg</li>
+                <li>[Author]. (n.d.). <em>1976 Napier aquarium building</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:1976_napier_aquarium_building.jpg</li>
+                <li>[Author]. (n.d.). <em>Bare Island</em> [Photograph]. Wikimedia Commons. https://commons.wikimedia.org/wiki/File:Bare_Island1_800x600.jpg</li>
+                <li>Sanjeev, S. V. K. (2026). <em>Hawke's Bay slideshow</em> [Animated GIF made from six of the photos above].</li>
+
+            </ul>
+            <h3>References</h3>
+            <ul>
+                <li>Google. (n.d.). <em>Google Fonts</em>. https://fonts.google.com</li>
+                <li>Google. (n.d.). <em>Google Translate website widget</em>. https://translate.google.com</li>
+                <li>Google. (n.d.). <em>Google Maps</em>. https://maps.google.com</li>
+                <li>NIWA. (n.d.). <em>Climate summaries for New Zealand locations</em>. National Institute of Water and Atmospheric Research. https://niwa.co.nz/climate</li>
+                <li>Refsnes Data. (n.d.). <em>W3Schools How To</em>. https://www.w3schools.com/howto/</li>
+                <li>Dang, D. (2026). <em>ITWD5.130 Website Development class demos</em> [Unpublished course materials]. Eastern Institute of Technology.</li>
+            </ul>
+        </div>
+    </dialog>
+
+    <!-- ===== PRIVACY POLICY dialog (Privacy Act 2020) ===== -->
+    <dialog id="privacyDialog">
+        <div class="dialogInner legalText">
+            <button type="button" class="dialogClose" onclick="closeDialog('privacyDialog')" aria-label="Close">&times;</button>
+            <h2>Privacy Policy</h2>
+            <p>This policy explains how Explore Hawke's Bay handles personal information, following the information privacy principles in the New Zealand Privacy Act 2020.</p>
+            <h3>What we collect</h3>
+            <p>Only the details you type into our forms: your name, email address, optional phone number and your message or place suggestion.</p>
+            <h3>Why we collect it</h3>
+            <p>To reply to your question or review your place suggestion. We do not use it for anything else.</p>
+            <h3>Emails and consent</h3>
+            <p>We only email you if you tick the consent box, as required by the Unsolicited Electronic Messages Act 2007. Every email will include a working unsubscribe link.</p>
+            <h3>Storage and sharing</h3>
+            <p>Your details are not sold or shared with anyone. Comments and ratings you add on attraction pages are not saved anywhere. Because this is a student project, forms are not sent to a real server.</p>
+            <h3>Your rights</h3>
+            <p>You can ask to see or correct the personal information we hold about you by using the Contact &amp; Feedback page.</p>
+        </div>
+    </dialog>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="js/data.js"></script>
+    <script src="js/explore.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Google Translate script loader -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
